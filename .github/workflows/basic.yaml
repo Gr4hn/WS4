@@ -15,7 +15,7 @@
 
 
 
-
+# ------------------------------------------------
 
 # För när workflow ska köras när push sker till repot
 
@@ -32,27 +32,54 @@
       # - name: run a simple command
         # run: node --version && npm --version
 
+
+
+# ------------------------------------------------
+
+
+
+# Push and build node.js
+
+# name: Push and Build
+
+# on: push
+
+# jobs: 
+  # build: 
+    # runs-on: ubuntu-latest
+    # steps: 
+      # - name: Checkout repo
+        # uses: actions/checkout@v4
+      # - name: Set-up Node.JS
+        # uses: actions/setup-node@v3
+      # - name: Install dependencies
+        # run: npm install
+      # - name: Build project
+        # run: npm run buildame: Set-up Node.JS
+        # 
+
+# ------------------------------------------------
+
+# Utökning av ovanstånde - Bygg flera nbode.js veropner med matrix strategi
+
 name: Push and Build
 
 on: push
 
 jobs: 
-  push-workflow-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Set-up Node.JS
-        uses: actions/setup-node@v3
   build: 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
     steps: 
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set-up Node.JS
         uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm install
       - name: Build project
         run: npm run build
-
