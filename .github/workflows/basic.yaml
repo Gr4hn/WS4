@@ -19,15 +19,40 @@
 
 # För när workflow ska köras när push sker till repot
 
-name: Push workflow
+# name: Push workflow
+
+# on: push
+
+# jobs: 
+  # push-workflow-job:
+    # runs-on: windows-latest
+    # steps: 
+      # - name: Checkout repository
+        # uses: actions/checkout@v4
+      # - name: run a simple command
+        # run: node --version && npm --version
+
+name: Push and Build
 
 on: push
 
 jobs: 
   push-workflow-job:
-    runs-on: windows-latest
-    steps: 
-      - name: Checkout repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
         uses: actions/checkout@v4
-      - name: run a simple command
-        run: node --version && npm --version
+      - name: Set-up Node.JS
+        uses: actions/setup-node@v3
+  build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set-up Node.JS
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+

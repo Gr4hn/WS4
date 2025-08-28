@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "11.5.2",
+  "description": "test of npm build",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo \"Bygger projektet...\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gr4hn/WS4.git"
+  },
+  "keywords": [
+    "hej"
+  ],
+  "author": "Eric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gr4hn/WS4/issues"
+  },
+  "homepage": "https://github.com/Gr4hn/WS4#readme"
+}
