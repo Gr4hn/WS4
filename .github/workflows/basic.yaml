@@ -55,8 +55,7 @@
       # - name: Install dependencies
         # run: npm install
       # - name: Build project
-        # run: npm run buildame: Set-up Node.JS
-        # 
+        # run: npm run build
 
 # ------------------------------------------------
 
@@ -91,7 +90,7 @@
 name: Scheduler demo job
 
 on: 
-  workflow_dispatch:
+  # workflow_dispatch:
   schedule: 
     - cron: '*/5 * * * *'
 
