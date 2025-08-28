@@ -1,4 +1,4 @@
-# För basic start, triggas när du vill i Github -> Actions -> Run workflow
+# Del 1: För basic start, triggas när du vill i Github -> Actions -> Run workflow
 
 # name: Basic Workflow
 
@@ -17,7 +17,7 @@
 
 # ------------------------------------------------
 
-# För när workflow ska köras när push sker till repot
+# Del 2: För när workflow ska köras när push sker till repot
 
 # name: Push workflow
 
@@ -38,7 +38,7 @@
 
 
 
-# Push and build node.js
+# Del 3: Push and build node.js
 
 # name: Push and Build
 
@@ -60,26 +60,44 @@
 
 # ------------------------------------------------
 
-# Utökning av ovanstånde - Bygg flera nbode.js veropner med matrix strategi
+# Del 3.1: Utökning av ovanstånde - Bygg flera nbode.js versioner med matrix strategi
 
-name: Push and Build
+# name: Push and Build
 
-on: push
+# on: push
+
+# jobs: 
+  # build: 
+    # runs-on: ubuntu-latest
+    # strategy:
+      # matrix:
+        # node-version: [16.x, 18.x, 20.x]
+    # steps: 
+      # - name: Checkout repo
+        # uses: actions/checkout@v4
+      # - name: Set-up Node.JS
+        # uses: actions/setup-node@v3
+        # with:
+          # node-version: ${{ matrix.node-version }}
+      # - name: Install dependencies
+        # run: npm install
+      # - name: Build project
+        # run: npm run build
+
+# ------------------------------------------------
+
+# Del 4: 
+
+name: Scheduler demo job
+
+on: 
+  workflow_dispatch:
+  schedule: 
+    - cron: '*/5 * * * *'
 
 jobs: 
-  build: 
+  scheduler-every-5-minute: 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x, 20.x]
-    steps: 
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Set-up Node.JS
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: npm install
-      - name: Build project
-        run: npm run build
+    steps:
+      - name: Print greeting
+        run: echo "Hello my friend..."
