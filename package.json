@@ -4,7 +4,7 @@
   "description": "test of npm build",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"Bygger projektet...\""
+    "build": "mkdir -p dist && cp index.js dist/index.js && echo Bygger projektet..."
   },
   "repository": {
     "type": "git",
