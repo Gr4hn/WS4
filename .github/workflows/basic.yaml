@@ -1,12 +1,33 @@
-name: Basic Workflow
+# För basic start, triggas när du vill i Github -> Actions -> Run workflow
 
-on: [workflow_dispatch]
+# name: Basic Workflow
 
-jobs:
-    basic-workflow-job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            - name: run a simple command (print a hello message)
-              run: echo "Hello this is a simple workflow running on GitHub Actions!"
+# on: [workflow_dispatch]
+
+# jobs:
+    # basic-workflow-job:
+      #  runs-on: ubuntu-latest
+       # steps:
+        #    - name: Checkout repository
+         #     uses: actions/checkout@v4
+          #  - name: run a simple command (print a hello message)
+           #   run: echo "Hello this is a simple workflow running on GitHub Actions!"
+
+
+
+
+
+# För när workflow ska köras när push sker till repot
+
+name: Push workflow
+
+on: push
+
+jobs: 
+  push-workflow-job:
+    runs-on: windows-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: run a simple command
+        run: node --version && npm --version
