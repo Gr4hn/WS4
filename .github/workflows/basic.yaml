@@ -17,6 +17,8 @@
 
 # ------------------------------------------------
 
+
+
 # Del 2: För när workflow ska köras när push sker till repot
 
 # name: Push workflow
@@ -57,7 +59,11 @@
       # - name: Build project
         # run: npm run build
 
+
+
 # ------------------------------------------------
+
+
 
 # Del 3.1: Utökning av ovanstånde - Bygg flera nbode.js versioner med matrix strategi
 
@@ -83,20 +89,72 @@
       # - name: Build project
         # run: npm run build
 
+
+
 # ------------------------------------------------
 
-# Del 4: 
 
-name: Scheduler demo job
+
+# Del 4: Schemalägga kontroller, använd schedule tillsammans med cron formatet (cron = tidsangivelse)
+
+# name: Scheduler demo job
+
+# on: 
+  # workflow_dispatch: # Denna del kan kommenteras ut när du har pushat första gången
+  # schedule: 
+    # - cron: '*/5 * * * *'
+
+# jobs: 
+  # scheduler-every-5-minute: 
+    # runs-on: ubuntu-latest
+    # steps:
+      # - name: Print greeting
+        # run: echo "Hello my friend..."
+
+
+
+# ------------------------------------------------
+
+
+# Del 5: Implementera ett workflow för att bygga och distribuera till GitHub Pages
+
+name: Push, Build and Deploy
 
 on: 
-  # workflow_dispatch:
-  schedule: 
-    - cron: '*/5 * * * *'
+  push:
+    branches: 
+      - main
 
-jobs: 
-  scheduler-every-5-minute: 
+jobs:
+  build: 
     runs-on: ubuntu-latest
     steps:
-      - name: Print greeting
-        run: echo "Hello my friend..."
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node.JS
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build  
+      - name: Upload dist as artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: dist-folder
+          path: dist/
+  deploy: 
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-folder
+          path: dist
+      - name: Deploy to Github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+
+
